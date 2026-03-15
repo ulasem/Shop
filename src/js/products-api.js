@@ -24,8 +24,14 @@ export async function getProductById(id) {
 }
 
 export async function getProductByCategory(category) {
+  const params = {
+    limit: 12,
+    skip: (currentPage - 1) * 12,
+  };
+
   const responce = await axios.get(
-    `${API_ENDPOINTS.PRODUCTS_BY_CATEGORY}${category}`
+    `${API_ENDPOINTS.PRODUCTS_BY_CATEGORY}${category}`,
+    { params }
   );
   return responce.data;
 }

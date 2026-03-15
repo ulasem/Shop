@@ -11,7 +11,7 @@ export function renderCategories(arrOfCategories) {
     )
     .join('');
 
-  refs.categoriesList.insertAdjacentHTML('beforeend', markup);
+  return refs.categoriesList.insertAdjacentHTML('beforeend', markup);
 }
 
 export function renderProducts(arrOfProducts) {
@@ -28,5 +28,5 @@ export function renderProducts(arrOfProducts) {
     )
     .join('');
 
-  refs.productsList.insertAdjacentHTML('beforeend', markup);
+  return refs.productsList.insertAdjacentHTML('beforeend', markup);
 }
