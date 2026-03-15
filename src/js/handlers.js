@@ -1,6 +1,7 @@
 import { refs } from './refs';
-import { renderProducts } from './render-function';
-import { checkIfCategory, toggleLoadMoreBtn } from './helpers';
+import { renderProduct, renderProducts } from './render-function';
+import { checkIfCategory, toggleLoadMoreBtn, toggleModal } from './helpers';
+import { getProductById } from './products-api';
 
 export async function handleLoadMore(state) {
   const result = await checkIfCategory(state.currentPage, state.category);
@@ -36,4 +37,17 @@ export async function handleFilterByCategory(event, state) {
   toggleLoadMoreBtn(result, state);
 
   renderProducts(result.products);
+}
+
+export async function handleOpenModal(event) {
+  const product = event.target.closest('.products__item');
+
+  if (!product) return;
+
+  const id = product.dataset.id;
+  const fetchedProduct = await getProductById(id);
+
+  renderProduct(fetchedProduct);
+
+  toggleModal();
 }

@@ -1,5 +1,9 @@
-import { handleFilterByCategory, handleLoadMore } from './js/handlers';
-import { toggleLoadMoreBtn } from './js/helpers';
+import {
+  handleFilterByCategory,
+  handleLoadMore,
+  handleOpenModal,
+} from './js/handlers';
+import { toggleLoadMoreBtn, toggleModal } from './js/helpers';
 import { getCategories, getProducts } from './js/products-api';
 import { refs } from './js/refs';
 import { renderCategories, renderProducts } from './js/render-function';
@@ -21,6 +25,10 @@ refs.loadMoreBtn.addEventListener('click', () => {
 refs.categoriesList.addEventListener('click', event =>
   handleFilterByCategory(event, state)
 );
+
+refs.productsList.addEventListener('click', handleOpenModal);
+
+refs.modalCloseBtn.addEventListener('click', toggleModal);
 
 async function loadCategories() {
   const categories = await getCategories();

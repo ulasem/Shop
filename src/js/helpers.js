@@ -18,3 +18,7 @@ export function toggleLoadMoreBtn(products, state) {
     refs.loadMoreBtn.classList.remove('is-hidden');
   }
 }
+
+export function toggleModal() {
+  refs.modal.classList.toggle('modal--is-open');
+}
