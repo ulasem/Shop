@@ -1,18 +1,26 @@
-import { handleLoadMore } from './js/handlers';
+import { handleFilterByCategory, handleLoadMore } from './js/handlers';
+import { toggleLoadMoreBtn } from './js/helpers';
 import { getCategories, getProducts } from './js/products-api';
 import { refs } from './js/refs';
 import { renderCategories, renderProducts } from './js/render-function';
 
 //Логіка сторінки Home
-let currentPage = 1;
+const state = {
+  currentPage: 1,
+  category: 'All',
+};
 
 loadCategories();
 loadProducts();
 
 refs.loadMoreBtn.addEventListener('click', () => {
-  currentPage += 1;
-  handleLoadMore(currentPage);
+  state.currentPage += 1;
+  handleLoadMore(state);
 });
+
+refs.categoriesList.addEventListener('click', event =>
+  handleFilterByCategory(event, state)
+);
 
 async function loadCategories() {
   const categories = await getCategories();
@@ -20,11 +28,9 @@ async function loadCategories() {
 }
 
 async function loadProducts() {
-  const products = await getProducts(currentPage);
+  const products = await getProducts(state.currentPage);
 
-  if (products.total - currentPage * 12 > 0) {
-    refs.loadMoreBtn.classList.remove('is-hidden');
-  }
+  toggleLoadMoreBtn(products, state);
 
   renderProducts(products.products);
 }

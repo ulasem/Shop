@@ -11,7 +11,7 @@ export function renderCategories(arrOfCategories) {
     )
     .join('');
 
-  return refs.categoriesList.insertAdjacentHTML('beforeend', markup);
+  return (refs.categoriesList.innerHTML = markup);
 }
 
 export function renderProducts(arrOfProducts) {

@@ -23,7 +23,7 @@ export async function getProductById(id) {
   return responce.data;
 }
 
-export async function getProductByCategory(category) {
+export async function getProductByCategory(category, currentPage) {
   const params = {
     limit: 12,
     skip: (currentPage - 1) * 12,

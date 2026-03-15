@@ -1,21 +1,39 @@
-import { getProductByCategory, getProducts } from './products-api';
 import { refs } from './refs';
 import { renderProducts } from './render-function';
+import { checkIfCategory, toggleLoadMoreBtn } from './helpers';
 
-// export async function handleReadCategory(event) {
-//   const textContent = event.target.textContent;
+export async function handleLoadMore(state) {
+  const result = await checkIfCategory(state.currentPage, state.category);
+  console.log('handleloadMore', result);
 
-//   const result = await getProductByCategory(textContent);
+  toggleLoadMoreBtn(result, state);
 
-//   renderProducts(result);
-// }
+  renderProducts(result.products);
+}
 
-export async function handleLoadMore(currentPage) {
-  const products = await getProducts(currentPage);
+export async function handleFilterByCategory(event, state) {
+  if (!event.target.classList.contains('categories__btn')) return;
 
-  if (products.total - currentPage * 12 < 0) {
-    refs.loadMoreBtn.classList.add('is-hidden');
+  document
+    .querySelectorAll('.categories__btn')
+    .forEach(btn => btn.classList.remove('categories__btn--active'));
+
+  event.target.classList.add('categories__btn--active');
+
+  state.category = event.target.textContent;
+  state.currentPage = 1;
+
+  refs.productsList.innerHTML = '';
+
+  const result = await checkIfCategory(state.currentPage, state.category);
+
+  if (result.products.length === 0) {
+    refs.notFound.classList.add('not-found--visible');
+  } else {
+    refs.notFound.classList.remove('not-found--visible');
   }
 
-  renderProducts(products.products);
+  toggleLoadMoreBtn(result, state);
+
+  renderProducts(result.products);
 }
