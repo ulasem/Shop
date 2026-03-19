@@ -41,7 +41,7 @@ export function renderProduct({
   shippingInformation,
   returnPolicy,
 }) {
-  const product = `<li data-id="${id}">
+  const product = `<div data-id="${id}">
       <img class="modal-product__img" src="${thumbnail}" alt="${title}" />
       <div class="modal-product__content">
         <p class="modal-product__title">${title}</p>
@@ -50,9 +50,9 @@ export function renderProduct({
         <p class="modal-product__shipping-information">Shipping: ${shippingInformation}</p>
         <p class="modal-product__return-policy">Return Policy: ${returnPolicy}</p>
         <p class="modal-product__price">Price: ${price} $</p>
-        <button class="modal-product__buy-btn" type="button">Buy</button>
+        <button class="modal-product__btn modal-product__buy-btn" type="button">Buy</button>
       </div>
-    </li>`;
+    </div>`;
 
   return (refs.modalProduct.innerHTML = product);
 }
